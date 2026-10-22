@@ -1,6 +1,6 @@
 # Phansible Role: Server
 
-[![Build Status](https://travis-ci.org/phansible/role-server.svg?branch=master)](https://travis-ci.org/phansible/role-server)
+[![CI](https://github.com/phansible/role-server/actions/workflows/ci.yml/badge.svg)](https://github.com/phansible/role-server/actions/workflows/ci.yml)
 
 An Ansible Role that configure an Ubuntu system specifically created with [Phansible](http://phansible.com/) in mind.
 
