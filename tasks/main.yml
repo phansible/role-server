@@ -12,7 +12,7 @@
   apt:
     pkg: "{{ server.packages }}"
     state: latest
-  when: server.packages
+  when: server.packages | length > 0
 
 - name: Configure the timezone
   become: yes
