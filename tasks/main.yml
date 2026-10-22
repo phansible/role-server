@@ -1,21 +1,18 @@
 ---
-- name: Update apt
-  become: yes
-  apt: update_cache=yes cache_valid_time=3600
-
 - name: Install System Packages
   become: yes
-  apt: pkg={{ item }} state=latest
-  with_items:
-    - curl
-    - wget
-    - python-software-properties
+  apt:
+    pkg: [curl, wget, ca-certificates, tzdata, locales]
+    state: latest
+    update_cache: yes
+    cache_valid_time: 3600
 
 - name: Install Extra Packages
   become: yes
-  apt: pkg={{ item }} state=latest
-  with_items: "{{ server.packages }}"
-  when: server.packages is defined
+  apt:
+    pkg: "{{ server.packages }}"
+    state: latest
+  when: server.packages
 
 - name: Configure the timezone
   become: yes
@@ -23,9 +20,9 @@
 
 - name: More Configure the timezone
   become: yes
-  file: src=/usr/share/zoneinfo/{{ server.timezone }} dest=/etc/localtime state=link force=yes backup=yes
+  file: src=/usr/share/zoneinfo/{{ server.timezone }} dest=/etc/localtime state=link force=yes
 
-- name: Set default system language pack
+- name: Generate the system locale
   become: yes
-  shell: locale-gen {{ server.locale }}
-  changed_when: false
+  community.general.locale_gen:
+    name: "{{ server.locale }}"
